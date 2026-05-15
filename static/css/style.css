@@ -132,6 +132,14 @@ button:disabled {
   font-style: italic;
 }
 
+.error-hint {
+  color: #ff9a9a;
+}
+
+.success-hint {
+  color: #90f0b0;
+}
+
 .tip {
   margin-top: 2.5rem;
   display: flex;

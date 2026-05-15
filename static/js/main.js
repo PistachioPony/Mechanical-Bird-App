@@ -4,13 +4,61 @@ const nameField = document.getElementById('name-field');
 const nextBtn = document.getElementById('next-btn');
 const sendBtn = document.getElementById('send-btn');
 const status = document.getElementById('status');
+const phoneHint = document.getElementById('phone-hint');
+
+const SUPPORTED_CODES = ['+1', '+44', '+47', '+45'];
+const CODE_LABELS = {
+  '+1': 'US (+1)',
+  '+44': 'UK (+44)',
+  '+47': 'Norway (+47)',
+  '+45': 'Denmark (+45)',
+};
+
+function validatePhone(raw) {
+  const phone = raw.trim();
+
+  if (!phone) return { valid: false, message: '' };
+
+  if (!phone.startsWith('+')) {
+    return { valid: false, message: 'Phone number must start with + and a country code (e.g. +1, +44, +47, +45).' };
+  }
+
+  const matchedCode = SUPPORTED_CODES.find(code => phone.startsWith(code));
+  if (!matchedCode) {
+    const supported = SUPPORTED_CODES.map(c => CODE_LABELS[c]).join(', ');
+    return { valid: false, message: `Unsupported country code. Supported: ${supported}.` };
+  }
+
+  const digits = phone.replace(/\D/g, '');
+  if (digits.length < 10) {
+    return { valid: false, message: 'Number is too short. Please include the full phone number.' };
+  }
+
+  return { valid: true, message: '' };
+}
+
+nextBtn.disabled = true;
+
+phoneInput.addEventListener('input', () => {
+  const { valid, message } = validatePhone(phoneInput.value);
+  nextBtn.disabled = !valid;
+
+  if (phoneInput.value.trim() === '') {
+    phoneHint.textContent = '';
+    phoneHint.className = 'hint';
+  } else if (!valid) {
+    phoneHint.textContent = message;
+    phoneHint.className = 'hint error-hint';
+  } else {
+    phoneHint.textContent = 'Looks good!';
+    phoneHint.className = 'hint success-hint';
+  }
+});
 
 nextBtn.addEventListener('click', () => {
-  const phone = phoneInput.value.trim();
-  if (!phone) {
-    showStatus('Please enter a phone number.', 'error');
-    return;
-  }
+  const { valid } = validatePhone(phoneInput.value);
+  if (!valid) return;
+
   hideStatus();
   nameField.classList.remove('hidden');
   nextBtn.classList.add('hidden');
@@ -44,8 +92,11 @@ sendBtn.addEventListener('click', async () => {
       showStatus(`A poem is on its way to ${phone}!`, 'success');
       nameInput.value = '';
       phoneInput.value = '';
+      phoneHint.textContent = '';
+      phoneHint.className = 'hint';
       nameField.classList.add('hidden');
       nextBtn.classList.remove('hidden');
+      nextBtn.disabled = true;
       sendBtn.classList.add('hidden');
     } else {
       showStatus(data.error || 'Something went wrong. Please try again.', 'error');
