@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, serif;
+  background: #fdf8f2;
+  color: #2c2c2c;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  color: #888;
+  font-style: italic;
+  margin-bottom: 2.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: left;
+}
+
+label {
+  font-size: 0.85rem;
+  color: #666;
+  letter-spacing: 0.03em;
+}
+
+input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #aaa;
+}
+
+button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background: #2c2c2c;
+  color: #fff;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #444;
+}
+
+button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
+}
+
+.status {
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.status.success {
+  background: #edfaf1;
+  color: #2d7a4f;
+}
+
+.status.error {
+  background: #fdecea;
+  color: #a33;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+.tip {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tip-btn {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #2c2c2c;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tip-btn:hover {
+  background: #fdf3e3;
+  border-color: #ccc;
+}
+
+.tip-note {
+  font-size: 0.78rem;
+  color: #aaa;
+  font-style: italic;
+}

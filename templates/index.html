@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mechanical Bird</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Mechanical Bird</h1>
+    <p class="subtitle">Send someone a poem by phone.</p>
+
+    <div class="form">
+      <div class="field" id="phone-field">
+        <label for="phone">Their phone number</label>
+        <input type="tel" id="phone" placeholder="+1 555 000 0000" />
+        <span class="hint">Include country code. Supported: US (+1), UK (+44), Norway (+47), Denmark (+45).</span>
+      </div>
+
+      <div class="field hidden" id="name-field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="Your name" />
+      </div>
+
+      <button id="next-btn">Continue</button>
+      <button id="send-btn" class="hidden">Send Poem</button>
+
+      <p id="status" class="status hidden"></p>
+    </div>
+
+    <div class="tip">
+      <a href="https://ko-fi.com/pistachiopony" target="_blank" class="tip-btn">☕ Buy me a coffee</a>
+      <p class="tip-note">Help keep Mechanical Bird flying.</p>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
