@@ -90,7 +90,7 @@ def send_poem():
     return jsonify({'success': True})
 
 
-@app.route('/twiml')
+@app.route('/twiml', methods=['GET', 'POST'])
 def twiml():
     sender_name = request.args.get('name', 'someone')
     poem_filename = request.args.get('poem', '')
