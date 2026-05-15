@@ -84,8 +84,8 @@ def send_poem():
             from_=TWILIO_PHONE_NUMBER,
             url=twiml_url
         )
-    except Exception:
-        return jsonify({'error': 'Could not place the call. Please try again later.'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
     return jsonify({'success': True})
 
