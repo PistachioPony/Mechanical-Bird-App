@@ -36,6 +36,14 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.counter {
+  font-size: 0.82rem;
+  color: #bbb;
+  font-style: italic;
+  margin-bottom: 0.6rem;
+  min-height: 1.2em;
+}
+
 .notice {
   font-size: 0.82rem;
   color: #bbb;

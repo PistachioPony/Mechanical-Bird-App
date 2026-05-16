@@ -1,3 +1,13 @@
+fetch('/count')
+  .then(r => r.json())
+  .then(data => {
+    const el = document.getElementById('poem-counter');
+    if (el && data.count > 0) {
+      el.textContent = `${data.count} poem${data.count === 1 ? '' : 's'} have taken flight`;
+    }
+  })
+  .catch(() => {});
+
 const phoneInput = document.getElementById('phone');
 const nameInput = document.getElementById('name');
 const nameField = document.getElementById('name-field');

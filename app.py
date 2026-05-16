@@ -9,11 +9,16 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
+from supabase import create_client
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+
+SUPABASE_URL = os.environ.get('SUPABASE_URL')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY')
+supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else None
 
 limiter = Limiter(get_remote_address, app=app, default_limits=[], storage_uri='memory://')
 
@@ -171,7 +176,24 @@ def send_poem():
     if not whitelisted:
         record_send(e164_number, get_remote_address())
 
+    if supabase_client:
+        try:
+            supabase_client.table('sends').insert({}).execute()
+        except Exception:
+            pass
+
     return jsonify({'success': True})
+
+
+@app.route('/count')
+def count():
+    if not supabase_client:
+        return jsonify({'count': 0})
+    try:
+        result = supabase_client.table('sends').select('id', count='exact').execute()
+        return jsonify({'count': result.count or 0})
+    except Exception:
+        return jsonify({'count': 0})
 
 
 @app.route('/twiml', methods=['GET', 'POST'])
