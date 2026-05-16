@@ -10,12 +10,6 @@ const shareSection = document.getElementById('share-section');
 const APP_URL = 'https://mechanicalbird.mariasaha.com';
 const SHARE_TEXT = 'Send someone a poem by Denver Butson — it calls their phone and reads it aloud.';
 
-document.getElementById('share-whatsapp').href =
-  `https://wa.me/?text=${encodeURIComponent(SHARE_TEXT + ' ' + APP_URL)}`;
-
-document.getElementById('share-x').href =
-  `https://x.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(APP_URL)}`;
-
 document.getElementById('share-threads').href =
   `https://www.threads.net/intent/post?text=${encodeURIComponent(SHARE_TEXT + ' ' + APP_URL)}`;
 
@@ -95,6 +89,7 @@ nextBtn.addEventListener('click', () => {
   nameField.classList.remove('hidden');
   nextBtn.classList.add('hidden');
   sendBtn.classList.remove('hidden');
+  document.getElementById('disclaimer').classList.remove('hidden');
   sendBtn.disabled = true;
   nameInput.focus();
 });

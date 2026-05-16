@@ -132,6 +132,23 @@ button:disabled {
   font-style: italic;
 }
 
+.disclaimer {
+  font-size: 0.78rem;
+  color: #bbb;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.privacy {
+  font-size: 0.75rem;
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  margin-top: 1.5rem;
+  line-height: 1.5;
+}
+
 .error-hint {
   color: #ff9a9a;
 }
