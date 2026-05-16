@@ -25,10 +25,14 @@ document.getElementById('share-copy').addEventListener('click', () => {
 });
 
 const COUNTRY_RULES = {
-  '+1':  { min: 11, max: 11, hint: '10 digits after +1' },
-  '+44': { min: 12, max: 12, hint: '10 digits after +44' },
-  '+47': { min: 10, max: 10, hint: '8 digits after +47' },
-  '+45': { min: 10, max: 10, hint: '8 digits after +45' },
+  '+1':   { min: 11, max: 11, hint: '10 digits after +1' },
+  '+44':  { min: 12, max: 12, hint: '10 digits after +44' },
+  '+47':  { min: 10, max: 10, hint: '8 digits after +47' },
+  '+45':  { min: 10, max: 10, hint: '8 digits after +45' },
+  '+34':  { min: 11, max: 11, hint: '9 digits after +34' },
+  '+49':  { min: 11, max: 13, hint: '10-11 digits after +49' },
+  '+353': { min: 12, max: 12, hint: '9 digits after +353' },
+  '+31':  { min: 11, max: 11, hint: '9 digits after +31' },
 };
 
 function validatePhone(raw) {
@@ -46,7 +50,7 @@ function validatePhone(raw) {
 
   const matchedCode = Object.keys(COUNTRY_RULES).find(code => phone.startsWith(code));
   if (!matchedCode) {
-    return { valid: false, message: 'Unsupported country code. Supported: US (+1), UK (+44), Norway (+47), Denmark (+45).' };
+    return { valid: false, message: 'Unsupported country code. Supported: US (+1), UK (+44), Norway (+47), Denmark (+45), Spain (+34), Germany (+49), Ireland (+353), Netherlands (+31).' };
   }
 
   const digits = phone.replace(/\D/g, '');

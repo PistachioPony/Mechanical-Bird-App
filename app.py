@@ -33,12 +33,16 @@ BLOCKED_WORDS = [
     'eff u', 'f u', 'fuk', 'fck', 'sht'
 ]
 
-ALLOWED_COUNTRIES = {'US', 'NO', 'DK', 'GB'}
+ALLOWED_COUNTRIES = {'US', 'NO', 'DK', 'GB', 'ES', 'DE', 'IE', 'NL'}
 COUNTRY_NAMES = {
     'US': 'United States',
+    'GB': 'United Kingdom',
     'NO': 'Norway',
     'DK': 'Denmark',
-    'GB': 'United Kingdom',
+    'ES': 'Spain',
+    'DE': 'Germany',
+    'IE': 'Ireland',
+    'NL': 'Netherlands',
 }
 
 # {phone_number: last_call_datetime}
@@ -158,7 +162,8 @@ def send_poem():
         client.calls.create(
             to=e164_number,
             from_=TWILIO_PHONE_NUMBER,
-            url=twiml_url
+            url=twiml_url,
+            machine_detection='Enable'
         )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -173,9 +178,15 @@ def send_poem():
 def twiml():
     sender_name = request.args.get('name', 'someone')
     poem_filename = request.args.get('poem', '')
+    answered_by = request.form.get('AnsweredBy', 'human')
     poem_url = f"{BASE_URL}/static/poems/{quote(poem_filename)}"
 
     response = VoiceResponse()
+
+    # If voicemail, pause to wait for the greeting and beep before playing
+    if 'machine' in answered_by:
+        response.pause(length=15)
+
     response.say(f"Hello! You are receiving a poem from your friend {sender_name}, read by Denver Butson himself.", voice='Polly.Joanna-Neural')
     response.pause(length=1)
     response.play(poem_url)
