@@ -170,3 +170,40 @@ button:disabled {
   color: #bbb;
   font-style: italic;
 }
+
+.about {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.about-toggle {
+  background: none;
+  border: none;
+  color: #bbb;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-toggle:hover {
+  color: #fff;
+  background: none;
+}
+
+.about-content {
+  margin-top: 1.2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.7;
+}
