@@ -94,8 +94,15 @@ nextBtn.addEventListener('click', () => {
   nameInput.focus();
 });
 
-nameInput.addEventListener('input', () => {
-  sendBtn.disabled = nameInput.value.trim() === '';
+function updateSendBtn() {
+  const hasName = nameInput.value.trim() !== '';
+  const hasConsent = document.getElementById('consent-checkbox').checked;
+  sendBtn.disabled = !(hasName && hasConsent);
+}
+
+nameInput.addEventListener('input', updateSendBtn);
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'consent-checkbox') updateSendBtn();
 });
 
 sendBtn.addEventListener('click', async () => {
