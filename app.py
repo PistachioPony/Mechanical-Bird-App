@@ -158,8 +158,7 @@ def send_poem():
         client.calls.create(
             to=e164_number,
             from_=TWILIO_PHONE_NUMBER,
-            url=twiml_url,
-            machine_detection='DetectMessageEnd'
+            url=twiml_url
         )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -177,11 +176,11 @@ def twiml():
     poem_url = f"{BASE_URL}/static/poems/{quote(poem_filename)}"
 
     response = VoiceResponse()
-    response.say(f"Hello, you have a poem from {sender_name}.", voice='alice')
+    response.say(f"{sender_name} is sending you a poem, read by Denver Butson himself.", voice='Polly.Joanna-Neural')
     response.pause(length=1)
     response.play(poem_url)
     response.pause(length=1)
-    response.say("To send a Denver Butson poem to someone, visit mechanical bird dot maria saha dot com.", voice='alice')
+    response.say("To send a Denver Butson poem to someone, visit mechanical bird dot maria saha dot com.", voice='Polly.Joanna-Neural')
 
     return str(response), 200, {'Content-Type': 'text/xml'}
 
