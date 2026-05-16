@@ -184,6 +184,21 @@ sendBtn.addEventListener('click', async () => {
   sendBtn.textContent = 'Send Poem';
 });
 
+document.querySelectorAll('.section-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.target;
+    const isOpen = !document.getElementById(targetId).classList.contains('hidden');
+
+    document.querySelectorAll('.section-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.classList.remove('active'));
+
+    if (!isOpen) {
+      document.getElementById(targetId).classList.remove('hidden');
+      btn.classList.add('active');
+    }
+  });
+});
+
 function showStatus(message, type) {
   status.textContent = message;
   status.className = `status ${type}`;

@@ -329,44 +329,36 @@ button:disabled {
   color: #fff;
 }
 
-.about-news-row {
+.about-news-section {
+  margin-top: 2rem;
+}
+
+.about-news-toggles {
   display: flex;
   gap: 2rem;
-  margin-top: 2rem;
-  align-items: flex-start;
+  justify-content: center;
 }
 
-.about-news-row .about {
-  flex: 1;
-  margin-top: 0;
-  text-align: center;
-}
-
-.about {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.about-toggle {
+.section-toggle {
+  background: none;
+  border: none;
   color: #bbb;
   font-family: Georgia, serif;
   font-size: 0.85rem;
   font-style: italic;
   cursor: pointer;
-  list-style: none;
   text-decoration: underline;
   text-underline-offset: 3px;
+  padding: 0;
 }
 
-.about-toggle::-webkit-details-marker {
-  display: none;
-}
-
-.about-toggle:hover {
+.section-toggle:hover,
+.section-toggle.active {
   color: #fff;
+  background: none;
 }
 
-.about-content {
+.section-content {
   margin-top: 1.2rem;
   text-align: left;
   display: flex;
