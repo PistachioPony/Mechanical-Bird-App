@@ -45,16 +45,6 @@ h1 {
   min-height: 1.2em;
 }
 
-.notice {
-  font-size: 0.82rem;
-  color: #bbb;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
-.highlight-number {
-  color: inherit;
-}
 
 .form {
   display: flex;
