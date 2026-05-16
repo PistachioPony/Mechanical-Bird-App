@@ -168,7 +168,6 @@ def send_poem():
             to=e164_number,
             from_=TWILIO_PHONE_NUMBER,
             url=twiml_url,
-            machine_detection='Enable'
         )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -200,15 +199,11 @@ def count():
 def twiml():
     sender_name = request.args.get('name', 'someone')
     poem_filename = request.args.get('poem', '')
-    answered_by = request.form.get('AnsweredBy', 'human')
     poem_url = f"{BASE_URL}/static/poems/{quote(poem_filename)}"
 
     response = VoiceResponse()
 
-    # If voicemail, pause to wait for the greeting and beep before playing
-    if 'machine' in answered_by:
-        response.pause(length=15)
-
+    response.pause(length=2)
     response.say(f"Hello! You are receiving a poem from your friend {sender_name}, read by Denver Butson himself.", voice='Polly.Joanna-Neural')
     response.pause(length=1)
     response.play(poem_url)
