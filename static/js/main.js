@@ -94,10 +94,30 @@ nextBtn.addEventListener('click', () => {
   nameInput.focus();
 });
 
+const BLOCKED_WORDS = [
+  'fuck', 'shit', 'ass', 'bitch', 'cunt', 'dick', 'cock', 'piss',
+  'bastard', 'asshole', 'motherfucker', 'fucker', 'damn', 'crap',
+  'eff u', 'f u', 'fuk', 'fck', 'sht'
+];
+
+function containsBlockedWord(text) {
+  const lower = text.toLowerCase();
+  return BLOCKED_WORDS.some(word => lower.includes(word));
+}
+
 function updateSendBtn() {
-  const hasName = nameInput.value.trim() !== '';
+  const name = nameInput.value.trim();
+  const hasName = name !== '';
   const hasConsent = document.getElementById('consent-checkbox').checked;
-  sendBtn.disabled = !(hasName && hasConsent);
+  const isClean = !containsBlockedWord(name);
+
+  if (hasName && !isClean) {
+    nameInput.style.borderColor = 'rgba(255, 100, 100, 0.7)';
+  } else {
+    nameInput.style.borderColor = '';
+  }
+
+  sendBtn.disabled = !(hasName && hasConsent && isClean);
 }
 
 nameInput.addEventListener('input', updateSendBtn);

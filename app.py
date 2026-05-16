@@ -27,6 +27,12 @@ WHITELISTED_NUMBERS = set(
     n.strip() for n in os.environ.get('WHITELISTED_NUMBERS', '').split(',') if n.strip()
 )
 
+BLOCKED_WORDS = [
+    'fuck', 'shit', 'ass', 'bitch', 'cunt', 'dick', 'cock', 'piss',
+    'bastard', 'asshole', 'motherfucker', 'fucker', 'damn', 'crap',
+    'eff u', 'f u', 'fuk', 'fck', 'sht'
+]
+
 ALLOWED_COUNTRIES = {'US', 'NO', 'DK', 'GB'}
 COUNTRY_NAMES = {
     'US': 'United States',
@@ -106,6 +112,9 @@ def send_poem():
 
     if not phone_number or not sender_name:
         return jsonify({'error': 'Phone number and name are required.'}), 400
+
+    if any(word in sender_name.lower() for word in BLOCKED_WORDS):
+        return jsonify({'error': 'Please enter a appropriate name.'}), 400
 
     e164_number, error = validate_phone(phone_number)
     if error:
