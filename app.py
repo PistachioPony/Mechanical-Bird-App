@@ -1,9 +1,12 @@
 import os
 import random
+from datetime import datetime, timedelta
 from urllib.parse import quote
 import phonenumbers
 from phonenumbers import NumberParseException
 from flask import Flask, render_template, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
 from dotenv import load_dotenv
@@ -11,6 +14,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+
+# Rate limiter: max 5 poems per IP per day
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=[],
+    storage_uri='memory://'
+)
 
 TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
@@ -24,6 +35,23 @@ COUNTRY_NAMES = {
     'DK': 'Denmark',
     'GB': 'United Kingdom',
 }
+
+# Tracks when each destination number last received a poem
+recent_calls = {}
+
+
+def clean_old_calls():
+    cutoff = datetime.now() - timedelta(hours=24)
+    expired = [num for num, t in list(recent_calls.items()) if t < cutoff]
+    for num in expired:
+        del recent_calls[num]
+
+
+def destination_recently_called(phone_number):
+    clean_old_calls()
+    if phone_number in recent_calls:
+        return datetime.now() - recent_calls[phone_number] < timedelta(hours=24)
+    return False
 
 
 def validate_phone(raw_number):
@@ -53,6 +81,7 @@ def index():
 
 
 @app.route('/send', methods=['POST'])
+@limiter.limit('5 per day', error_message='You have sent 5 poems today. Please come back tomorrow!')
 def send_poem():
     data = request.get_json()
     phone_number = data.get('phone_number', '').strip()
@@ -64,6 +93,9 @@ def send_poem():
     e164_number, error = validate_phone(phone_number)
     if error:
         return jsonify({'error': error}), 400
+
+    if destination_recently_called(e164_number):
+        return jsonify({'error': 'This number has already received a poem today. Please try again tomorrow!'}), 429
 
     poems_dir = os.path.join(app.static_folder, 'poems')
     poems = [f for f in os.listdir(poems_dir) if f.endswith('.mp3')]
@@ -99,7 +131,13 @@ def send_poem():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+    recent_calls[e164_number] = datetime.now()
     return jsonify({'success': True})
+
+
+@app.errorhandler(429)
+def rate_limit_exceeded(e):
+    return jsonify({'error': str(e.description)}), 429
 
 
 @app.route('/twiml', methods=['GET', 'POST'])
