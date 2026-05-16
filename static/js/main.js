@@ -16,6 +16,12 @@ document.getElementById('share-whatsapp').href =
 document.getElementById('share-x').href =
   `https://x.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(APP_URL)}`;
 
+document.getElementById('share-threads').href =
+  `https://www.threads.net/intent/post?text=${encodeURIComponent(SHARE_TEXT + ' ' + APP_URL)}`;
+
+document.getElementById('share-facebook').href =
+  `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`;
+
 document.getElementById('share-copy').addEventListener('click', () => {
   navigator.clipboard.writeText(APP_URL).then(() => {
     const btn = document.getElementById('share-copy');
