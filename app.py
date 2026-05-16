@@ -140,7 +140,8 @@ def send_poem():
                 from_=TWILIO_PHONE_NUMBER,
                 body=(
                     f"{sender_name} is sending you a poem by Denver Butson. "
-                    f"Pick up the call from {TWILIO_PHONE_NUMBER} — a poem is on its way!"
+                    f"Pick up the call from {TWILIO_PHONE_NUMBER} — a poem is on its way! "
+                    f"To send a Denver Butson poem to someone, visit mechanicalbird.mariasaha.com"
                 )
             )
         except Exception:
