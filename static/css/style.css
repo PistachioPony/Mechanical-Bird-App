@@ -366,6 +366,10 @@ button:disabled {
   gap: 1rem;
 }
 
+.section-content.hidden {
+  display: none;
+}
+
 .about-text {
   font-size: 0.85rem;
   color: #ccc;
