@@ -52,6 +52,10 @@ h1 {
   line-height: 1.5;
 }
 
+.highlight-number {
+  color: #FBE11B;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -185,7 +189,7 @@ button:disabled {
 
 .share-label {
   font-size: 1rem;
-  color: #c9a84c;
+  color: #FBE11B;
   font-style: italic;
   margin-bottom: 0.8rem;
 }
@@ -342,7 +346,7 @@ button:disabled {
 .section-toggle {
   background: none;
   border: none;
-  color: #c9a84c;
+  color: #FBE11B;
   font-family: Georgia, serif;
   font-size: 1rem;
   font-style: italic;
@@ -354,7 +358,7 @@ button:disabled {
 
 .section-toggle:hover,
 .section-toggle.active {
-  color: #e8c96a;
+  color: #fff;
   background: none;
 }
 
