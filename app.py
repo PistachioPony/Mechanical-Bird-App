@@ -176,7 +176,7 @@ def twiml():
     poem_url = f"{BASE_URL}/static/poems/{quote(poem_filename)}"
 
     response = VoiceResponse()
-    response.say(f"{sender_name} is sending you a poem, read by Denver Butson himself.", voice='Polly.Joanna-Neural')
+    response.say(f"Hello! You are receiving a poem from your friend {sender_name}, read by Denver Butson himself.", voice='Polly.Joanna-Neural')
     response.pause(length=1)
     response.play(poem_url)
     response.pause(length=1)
