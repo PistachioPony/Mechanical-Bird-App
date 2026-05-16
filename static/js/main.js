@@ -128,9 +128,3 @@ function hideStatus() {
   status.classList.add('hidden');
 }
 
-document.getElementById('about-toggle').addEventListener('click', () => {
-  const content = document.getElementById('about-content');
-  const btn = document.getElementById('about-toggle');
-  content.classList.toggle('hidden');
-  btn.textContent = content.classList.contains('hidden') ? 'About this project' : 'Close';
-});

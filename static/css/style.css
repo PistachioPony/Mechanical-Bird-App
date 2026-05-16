@@ -177,21 +177,22 @@ button:disabled {
 }
 
 .about-toggle {
-  background: none;
-  border: none;
   color: #bbb;
   font-family: Georgia, serif;
   font-size: 0.85rem;
   font-style: italic;
   cursor: pointer;
-  padding: 0;
+  list-style: none;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
+.about-toggle::-webkit-details-marker {
+  display: none;
+}
+
 .about-toggle:hover {
   color: #fff;
-  background: none;
 }
 
 .about-content {
