@@ -207,6 +207,38 @@ button:disabled {
   font-style: italic;
 }
 
+.contact {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.contact-label {
+  font-size: 0.78rem;
+  color: #bbb;
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.contact-link {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: #fff;
+}
+
 .about {
   margin-top: 2rem;
   text-align: center;
