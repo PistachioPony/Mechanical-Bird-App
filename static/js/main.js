@@ -6,12 +6,11 @@ const sendBtn = document.getElementById('send-btn');
 const status = document.getElementById('status');
 const phoneHint = document.getElementById('phone-hint');
 
-const SUPPORTED_CODES = ['+1', '+44', '+47', '+45'];
-const CODE_LABELS = {
-  '+1': 'US (+1)',
-  '+44': 'UK (+44)',
-  '+47': 'Norway (+47)',
-  '+45': 'Denmark (+45)',
+const COUNTRY_RULES = {
+  '+1':  { min: 11, max: 11, hint: '10 digits after +1' },
+  '+44': { min: 12, max: 12, hint: '10 digits after +44' },
+  '+47': { min: 10, max: 10, hint: '8 digits after +47' },
+  '+45': { min: 10, max: 10, hint: '8 digits after +45' },
 };
 
 function validatePhone(raw) {
@@ -19,19 +18,28 @@ function validatePhone(raw) {
 
   if (!phone) return { valid: false, message: '' };
 
+  if (/[a-zA-Z]/.test(phone)) {
+    return { valid: false, message: 'Phone numbers cannot contain letters.' };
+  }
+
   if (!phone.startsWith('+')) {
     return { valid: false, message: 'Phone number must start with + and a country code (e.g. +1, +44, +47, +45).' };
   }
 
-  const matchedCode = SUPPORTED_CODES.find(code => phone.startsWith(code));
+  const matchedCode = Object.keys(COUNTRY_RULES).find(code => phone.startsWith(code));
   if (!matchedCode) {
-    const supported = SUPPORTED_CODES.map(c => CODE_LABELS[c]).join(', ');
-    return { valid: false, message: `Unsupported country code. Supported: ${supported}.` };
+    return { valid: false, message: 'Unsupported country code. Supported: US (+1), UK (+44), Norway (+47), Denmark (+45).' };
   }
 
   const digits = phone.replace(/\D/g, '');
-  if (digits.length < 10) {
-    return { valid: false, message: 'Number is too short. Please include the full phone number.' };
+  const rules = COUNTRY_RULES[matchedCode];
+
+  if (digits.length < rules.min) {
+    return { valid: false, message: `Number is too short — ${rules.hint}.` };
+  }
+
+  if (digits.length > rules.max) {
+    return { valid: false, message: `Number is too long — ${rules.hint}.` };
   }
 
   return { valid: true, message: '' };
