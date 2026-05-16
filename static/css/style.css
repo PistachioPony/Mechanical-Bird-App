@@ -184,8 +184,8 @@ button:disabled {
 }
 
 .share-label {
-  font-size: 0.85rem;
-  color: #ccc;
+  font-size: 1rem;
+  color: #c9a84c;
   font-style: italic;
   margin-bottom: 0.8rem;
 }
@@ -342,9 +342,9 @@ button:disabled {
 .section-toggle {
   background: none;
   border: none;
-  color: #bbb;
+  color: #c9a84c;
   font-family: Georgia, serif;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-style: italic;
   cursor: pointer;
   text-decoration: underline;
@@ -354,7 +354,7 @@ button:disabled {
 
 .section-toggle:hover,
 .section-toggle.active {
-  color: #fff;
+  color: #e8c96a;
   background: none;
 }
 
