@@ -5,6 +5,24 @@ const nextBtn = document.getElementById('next-btn');
 const sendBtn = document.getElementById('send-btn');
 const status = document.getElementById('status');
 const phoneHint = document.getElementById('phone-hint');
+const shareSection = document.getElementById('share-section');
+
+const APP_URL = 'https://mechanicalbird.mariasaha.com';
+const SHARE_TEXT = 'Send someone a poem by Denver Butson — it calls their phone and reads it aloud.';
+
+document.getElementById('share-whatsapp').href =
+  `https://wa.me/?text=${encodeURIComponent(SHARE_TEXT + ' ' + APP_URL)}`;
+
+document.getElementById('share-x').href =
+  `https://x.com/intent/tweet?text=${encodeURIComponent(SHARE_TEXT)}&url=${encodeURIComponent(APP_URL)}`;
+
+document.getElementById('share-copy').addEventListener('click', () => {
+  navigator.clipboard.writeText(APP_URL).then(() => {
+    const btn = document.getElementById('share-copy');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Link', 2000);
+  });
+});
 
 const COUNTRY_RULES = {
   '+1':  { min: 11, max: 11, hint: '10 digits after +1' },
@@ -106,6 +124,7 @@ sendBtn.addEventListener('click', async () => {
       nextBtn.classList.remove('hidden');
       nextBtn.disabled = true;
       sendBtn.classList.add('hidden');
+      shareSection.classList.remove('hidden');
     } else {
       showStatus(data.error || 'Something went wrong. Please try again.', 'error');
       sendBtn.disabled = false;

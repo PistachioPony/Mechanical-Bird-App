@@ -140,6 +140,42 @@ button:disabled {
   color: #90f0b0;
 }
 
+.share {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.share-label {
+  font-size: 0.85rem;
+  color: #ccc;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.share-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .tip {
   margin-top: 2.5rem;
   display: flex;
