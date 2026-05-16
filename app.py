@@ -79,6 +79,14 @@ def send_poem():
 
     try:
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        client.messages.create(
+            to=e164_number,
+            from_=TWILIO_PHONE_NUMBER,
+            body=(
+                f"{sender_name} is sending you a poem by Denver Butson. "
+                f"Pick up the call from {TWILIO_PHONE_NUMBER} — a poem is on its way!"
+            )
+        )
         client.calls.create(
             to=e164_number,
             from_=TWILIO_PHONE_NUMBER,
