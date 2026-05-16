@@ -15,18 +15,17 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Rate limiter: max 5 poems per IP per day
-limiter = Limiter(
-    get_remote_address,
-    app=app,
-    default_limits=[],
-    storage_uri='memory://'
-)
+limiter = Limiter(get_remote_address, app=app, default_limits=[], storage_uri='memory://')
 
 TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
 TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER')
 BASE_URL = os.environ.get('BASE_URL')
+
+# Comma-separated list of numbers that bypass rate limits (for testing)
+WHITELISTED_NUMBERS = set(
+    n.strip() for n in os.environ.get('WHITELISTED_NUMBERS', '').split(',') if n.strip()
+)
 
 ALLOWED_COUNTRIES = {'US', 'NO', 'DK', 'GB'}
 COUNTRY_NAMES = {
@@ -36,22 +35,41 @@ COUNTRY_NAMES = {
     'GB': 'United Kingdom',
 }
 
-# Tracks when each destination number last received a poem
+# {phone_number: last_call_datetime}
 recent_calls = {}
 
+# {ip_address: [call_datetime, ...]}
+ip_call_log = {}
 
-def clean_old_calls():
+
+def clean_old_entries():
     cutoff = datetime.now() - timedelta(hours=24)
-    expired = [num for num, t in list(recent_calls.items()) if t < cutoff]
-    for num in expired:
-        del recent_calls[num]
+    for num in list(recent_calls):
+        if recent_calls[num] < cutoff:
+            del recent_calls[num]
+    for ip in list(ip_call_log):
+        ip_call_log[ip] = [t for t in ip_call_log[ip] if t > cutoff]
+        if not ip_call_log[ip]:
+            del ip_call_log[ip]
 
 
 def destination_recently_called(phone_number):
-    clean_old_calls()
+    clean_old_entries()
     if phone_number in recent_calls:
         return datetime.now() - recent_calls[phone_number] < timedelta(hours=24)
     return False
+
+
+def ip_over_limit(ip, limit=5):
+    calls = ip_call_log.get(ip, [])
+    cutoff = datetime.now() - timedelta(hours=24)
+    recent = [t for t in calls if t > cutoff]
+    return len(recent) >= limit
+
+
+def record_send(phone_number, ip):
+    recent_calls[phone_number] = datetime.now()
+    ip_call_log.setdefault(ip, []).append(datetime.now())
 
 
 def validate_phone(raw_number):
@@ -81,7 +99,6 @@ def index():
 
 
 @app.route('/send', methods=['POST'])
-@limiter.limit('5 per day', error_message='You have sent 5 poems today. Please come back tomorrow!')
 def send_poem():
     data = request.get_json()
     phone_number = data.get('phone_number', '').strip()
@@ -94,8 +111,14 @@ def send_poem():
     if error:
         return jsonify({'error': error}), 400
 
-    if destination_recently_called(e164_number):
-        return jsonify({'error': 'This number has already received a poem today. Please try again tomorrow!'}), 429
+    whitelisted = e164_number in WHITELISTED_NUMBERS
+
+    if not whitelisted:
+        ip = get_remote_address()
+        if ip_over_limit(ip):
+            return jsonify({'error': 'You have sent 5 poems today. Please come back tomorrow!'}), 429
+        if destination_recently_called(e164_number):
+            return jsonify({'error': 'This number has already received a poem today. Please try again tomorrow!'}), 429
 
     poems_dir = os.path.join(app.static_folder, 'poems')
     poems = [f for f in os.listdir(poems_dir) if f.endswith('.mp3')]
@@ -131,13 +154,10 @@ def send_poem():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    recent_calls[e164_number] = datetime.now()
+    if not whitelisted:
+        record_send(e164_number, get_remote_address())
+
     return jsonify({'success': True})
-
-
-@app.errorhandler(429)
-def rate_limit_exceeded(e):
-    return jsonify({'error': str(e.description)}), 429
 
 
 @app.route('/twiml', methods=['GET', 'POST'])
