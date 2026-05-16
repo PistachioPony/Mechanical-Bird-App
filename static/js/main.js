@@ -10,6 +10,11 @@ fetch('/count')
 
 const phoneInput = document.getElementById('phone');
 const nameInput = document.getElementById('name');
+
+window.addEventListener('load', () => {
+  phoneInput.value = '';
+  nameInput.value = '';
+});
 const nameField = document.getElementById('name-field');
 const nextBtn = document.getElementById('next-btn');
 const sendBtn = document.getElementById('send-btn');

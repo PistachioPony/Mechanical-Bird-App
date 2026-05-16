@@ -22,13 +22,13 @@
     <div class="form">
       <div class="field" id="phone-field">
         <label for="phone">Their phone number</label>
-        <input type="tel" id="phone" placeholder="+1 555 000 0000" />
+        <input type="tel" id="phone" placeholder="+1 555 000 0000" autocomplete="off" />
         <span class="hint" id="phone-hint">Include country code. Supported: US (+1), UK (+44), Norway (+47), Denmark (+45), Spain (+34), Germany (+49), Ireland (+353), Netherlands (+31).</span>
       </div>
 
       <div class="field hidden" id="name-field">
         <label for="name">Your name</label>
-        <input type="text" id="name" placeholder="Your name" />
+        <input type="text" id="name" placeholder="Your name" autocomplete="off" />
       </div>
 
       <button id="next-btn">Continue</button>
@@ -43,6 +43,20 @@
       <p id="status" class="status hidden"></p>
 
     </div>
+
+    <details class="help">
+      <summary class="help-toggle">Having trouble?</summary>
+      <div class="help-content">
+        <ul class="help-list">
+          <li>Make sure you've checked the box confirming the recipient is happy to receive the call.</li>
+          <li>Phone numbers must include a country code (e.g. +1 for US, +44 for UK).</li>
+          <li>You can send up to 5 poems per day, and each number can only receive one poem per day.</li>
+          <li>If the Send button won't activate, try a hard refresh: on iPhone hold the reload button, on Android pull down to refresh, on desktop press Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows).</li>
+          <li>If the call goes to voicemail, the poem will still play after the beep.</li>
+          <li>Having other issues? Email <a href="mailto:maria@mariasaha.com" class="help-link">maria@mariasaha.com</a></li>
+        </ul>
+      </div>
+    </details>
 
     <div class="share" id="share-section">
       <p class="share-label">Share this app</p>
@@ -69,30 +83,39 @@
 
     <p class="privacy">Phone numbers entered are never stored permanently and are only used to deliver your poem.</p>
 
-    <details class="about">
-      <summary class="about-toggle">About this project</summary>
-      <div class="about-content">
-        <p class="about-text"><em>Long before the telephone, birds carried messages. Mechanical Bird does the same — but through the ether.</em></p>
-        <p class="about-text">
-          <strong>Maria Saha</strong> is an artist and coder, a Yale graduate, a Henry Street Settlement Van Lier Fellow,
-          and has worked with artists Donald Judd, Tony Bechara, and Jeff Koons. She previously
-          collaborated with Denver Butson on the cigar box project and on a photographic/poetry
-          sculpture and book called <em>We All Kiss Something Secretly</em>. Maria's work looks to
-          find the magical in the mundane in both digital and physical mediums. Her collaborations
-          with Butson have combined her love for drawing, technology, vernacular photography, and
-          word in unique and exciting ways.
-        </p>
-        <p class="about-text">
-          <strong>Denver Butson</strong> is a poet who is always looking for ways to get poems off
-          the page through collaboration and other visual and audio methods. He has published four
-          books of poetry, has been featured in Poetry 180, in dozens of journals and anthologies,
-          and regularly on National Public Radio. A New York Foundation for the Arts Individual
-          Artist Fellow, Denver has been thrice-nominated for a Pushcart Prize. His frequent
-          collaborations with musicians, visual artists, and actors have been showcased in many
-          venues throughout the US and abroad.
-        </p>
-      </div>
-    </details>
+    <div class="about-news-row">
+      <details class="about">
+        <summary class="about-toggle">About this project</summary>
+        <div class="about-content">
+          <p class="about-text"><em>Long before the telephone, birds carried messages. Mechanical Bird does the same — but through the ether.</em></p>
+          <p class="about-text">
+            <strong>Maria Saha</strong> is an artist and coder, a Yale graduate, a Henry Street Settlement Van Lier Fellow,
+            and has worked with artists Donald Judd, Tony Bechara, and Jeff Koons. She previously
+            collaborated with Denver Butson on the cigar box project and on a photographic/poetry
+            sculpture and book called <em>We All Kiss Something Secretly</em>. Maria's work looks to
+            find the magical in the mundane in both digital and physical mediums. Her collaborations
+            with Butson have combined her love for drawing, technology, vernacular photography, and
+            word in unique and exciting ways.
+          </p>
+          <p class="about-text">
+            <strong>Denver Butson</strong> is a poet who is always looking for ways to get poems off
+            the page through collaboration and other visual and audio methods. He has published four
+            books of poetry, has been featured in Poetry 180, in dozens of journals and anthologies,
+            and regularly on National Public Radio. A New York Foundation for the Arts Individual
+            Artist Fellow, Denver has been thrice-nominated for a Pushcart Prize. His frequent
+            collaborations with musicians, visual artists, and actors have been showcased in many
+            venues throughout the US and abroad.
+          </p>
+        </div>
+      </details>
+
+      <details class="about">
+        <summary class="about-toggle">News</summary>
+        <div class="about-content">
+          <p class="about-text">Please check in this space for Denver's upcoming readings and book releases!</p>
+        </div>
+      </details>
+    </div>
   </div>
 
   <script src="/static/js/main.js"></script>
