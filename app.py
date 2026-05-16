@@ -90,7 +90,8 @@ def send_poem():
         client.calls.create(
             to=e164_number,
             from_=TWILIO_PHONE_NUMBER,
-            url=twiml_url
+            url=twiml_url,
+            machine_detection='DetectMessageEnd'
         )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
