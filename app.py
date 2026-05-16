@@ -170,6 +170,8 @@ def twiml():
     response.say(f"Hello, you have a poem from {sender_name}.", voice='alice')
     response.pause(length=1)
     response.play(poem_url)
+    response.pause(length=1)
+    response.say("To send a Denver Butson poem to someone, visit mechanical bird dot maria saha dot com.", voice='alice')
 
     return str(response), 200, {'Content-Type': 'text/xml'}
 
