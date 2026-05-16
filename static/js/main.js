@@ -130,6 +130,7 @@ sendBtn.addEventListener('click', async () => {
       nextBtn.classList.remove('hidden');
       nextBtn.disabled = true;
       sendBtn.classList.add('hidden');
+      document.querySelector('.share-label').textContent = 'Know someone else who\'d love this?';
     } else {
       showStatus(data.error || 'Something went wrong. Please try again.', 'error');
       sendBtn.disabled = false;
