@@ -130,7 +130,6 @@ sendBtn.addEventListener('click', async () => {
       nextBtn.classList.remove('hidden');
       nextBtn.disabled = true;
       sendBtn.classList.add('hidden');
-      shareSection.classList.remove('hidden');
     } else {
       showStatus(data.error || 'Something went wrong. Please try again.', 'error');
       sendBtn.disabled = false;
