@@ -3,7 +3,7 @@ fetch('/count')
   .then(data => {
     const el = document.getElementById('poem-counter');
     if (el && data.count > 0) {
-      el.textContent = `${data.count} poem${data.count === 1 ? '' : 's'} have taken flight`;
+      el.innerHTML = `<span style="color:#FBE11B">${data.count}</span> poem${data.count === 1 ? '' : 's'} have taken flight`;
     }
   })
   .catch(() => {});
